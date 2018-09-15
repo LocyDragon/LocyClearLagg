@@ -2,6 +2,7 @@ package com.locydragon.lagg.listeners;
 
 import com.locydragon.lagg.listeners.ache.Ache;
 import com.locydragon.lagg.util.ItemContainer;
+import com.locydragon.lagg.util.logger.LaggLogger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -21,6 +22,7 @@ public class PickUpListener implements Listener {
 				ItemContainer.containerMap.remove(container.getTarget().getUniqueId());
 				Ache.containerVector.remove(container);
 			}
+			LaggLogger.info("Remove container item: "+container.getId()+" ,Name: "+container.getTarget().getItemStack().getType()+"!");
 		});
 		async.start();
 	}

@@ -6,7 +6,7 @@ import org.neuroph.util.TransferFunctionType;
 
 public class NeuralNetwork {
 	public static MultiLayerPerceptron actor
-			= new MultiLayerPerceptron(TransferFunctionType.RAMP, 5, 14, 1);
+			= new MultiLayerPerceptron(TransferFunctionType.SIGMOID, 5, 14, 1);
 	DataSet dataTraining = new DataSet(5, 1);
 	static {
 

@@ -3,6 +3,7 @@ package com.locydragon.lagg.listeners;
 import com.locydragon.lagg.ClearLagg;
 import com.locydragon.lagg.listeners.ache.Ache;
 import com.locydragon.lagg.util.ItemContainer;
+import com.locydragon.lagg.util.logger.LaggLogger;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,6 +35,8 @@ public class ThrowListener implements Listener {
 			Ache.containerVector.remove(container);
 			ItemContainer.containerMap.remove(item.getUniqueId());
 			new ItemContainer(item);
+			LaggLogger.info("Add id: "+container.getId()+
+					" item to stack,name: "+container.getTarget().getCustomName()+"!");
 		}
 		removeAsync(container);
 	}
@@ -46,7 +49,9 @@ public class ThrowListener implements Listener {
 				exc.printStackTrace();
 			}
 			if (Ache.containerVector.contains(container)) {
+				ItemContainer.containerMap.remove(container.getTarget().getUniqueId());
 				Ache.containerVector.remove(container);
+				LaggLogger.info("Remove id: "+container.getId()+" from stack.");
 			}
 		});
 		async.start();
