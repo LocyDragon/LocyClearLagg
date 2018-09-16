@@ -54,6 +54,8 @@ public class ThrowListener implements Listener {
 				LaggLogger.info("Remove id: "+container.getId()+" from stack.");
 			}
 		});
+		async.setDaemon(true);
 		async.start();
+		Ache.loadThreads.add(async);
 	}
 }

@@ -24,6 +24,8 @@ public class PickUpListener implements Listener {
 			}
 			LaggLogger.info("Remove container item: "+container.getId()+" ,Name: "+container.getTarget().getItemStack().getType()+"!");
 		});
+		async.setDaemon(true);
 		async.start();
+		Ache.loadThreads.add(async);
 	}
 }
