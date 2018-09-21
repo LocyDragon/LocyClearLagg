@@ -18,11 +18,13 @@ public class PickUpListener implements Listener {
 
 	public void asyncRemove(ItemContainer container) {
 		Thread async = new Thread(() -> {
-			if (Ache.containerVector.contains(container)) {
-				ItemContainer.containerMap.remove(container.getTarget().getUniqueId());
-				Ache.containerVector.remove(container);
+			synchronized (Ache.containerVector) {
+				if (Ache.containerVector.contains(container)) {
+					ItemContainer.containerMap.remove(container.getTarget().getUniqueId());
+					Ache.containerVector.remove(container);
+				}
+				LaggLogger.info("Remove container item: " + container.getId() + " ,Name: " + container.getTarget().getItemStack().getType() + "!");
 			}
-			LaggLogger.info("Remove container item: "+container.getId()+" ,Name: "+container.getTarget().getItemStack().getType()+"!");
 		});
 		async.setDaemon(true);
 		async.start();

@@ -43,15 +43,17 @@ public class ThrowListener implements Listener {
 
 	public void removeAsync(ItemContainer container) {
 		Thread async = new Thread(() -> {
-			try {
-				Thread.sleep(1000 * ClearLagg.config.getInt("settings.ItemDropDelay"));
-			} catch (Exception exc) {
-				exc.printStackTrace();
-			}
-			if (Ache.containerVector.contains(container)) {
-				ItemContainer.containerMap.remove(container.getTarget().getUniqueId());
-				Ache.containerVector.remove(container);
-				LaggLogger.info("Remove id: "+container.getId()+" from stack.");
+			synchronized (Ache.containerVector) {
+				try {
+					Thread.sleep(1000 * ClearLagg.config.getInt("settings.ItemDropDelay"));
+				} catch (Exception exc) {
+					exc.printStackTrace();
+				}
+				if (Ache.containerVector.contains(container)) {
+					ItemContainer.containerMap.remove(container.getTarget().getUniqueId());
+					Ache.containerVector.remove(container);
+					LaggLogger.info("Remove id: " + container.getId() + " from stack.");
+				}
 			}
 		});
 		async.setDaemon(true);

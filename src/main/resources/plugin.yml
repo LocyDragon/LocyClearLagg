@@ -1,0 +1,6 @@
+name: LocyClearLagg
+main: com.locydragon.lagg.ClearLagg
+version: 1.0.0
+author: LocyDragon
+commands:
+  lcl:
