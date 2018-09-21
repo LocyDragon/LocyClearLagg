@@ -20,4 +20,5 @@ public class Ache {
 	public static AtomicInteger houseCount = new AtomicInteger();
 	public static AtomicInteger entityCount = new AtomicInteger();
 	public static final Vector<Thread> cleanItemThread = new Vector<>();
+	public static final Vector<Entity> craftEntityVector = new Vector<>();
 }

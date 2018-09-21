@@ -3,6 +3,8 @@ settings:
   noticeBeforeTime: 15
   ItemDropDelay: 20
   ItemCleanDistance: 20
+  EntitySpawnDelay: 20
+  EntityCleanDistance: 20
 message:
   CleanMsg: "&7[&a垃圾清理&7] &e{item} &b个垃圾 和 &e{monster} &b个怪物已经被我清理辣~"`
   BeforeClean: "&7[&a垃圾清理&7] &e还有 &b{time} &e秒后我们就来清理垃圾辣~"
