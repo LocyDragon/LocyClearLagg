@@ -23,12 +23,10 @@ public class EntitySpawnListener implements Listener {
 			} catch (Exception exc) {
 				exc.printStackTrace();
 			}
-			synchronized (Ache.craftEntityVector) {
-				if (Ache.craftEntityVector.contains(entity)) {
-					Ache.craftEntityVector.remove(entity);
-				}
-				LaggLogger.info("Remove entity "+entity.getUniqueId().toString()+" from stack.");
+			if (Ache.craftEntityVector.contains(entity)) {
+				Ache.craftEntityVector.remove(entity);
 			}
+			LaggLogger.info("Remove entity "+entity.getUniqueId().toString()+" from stack.");
 		});
 		async.setDaemon(true);
 		async.start();

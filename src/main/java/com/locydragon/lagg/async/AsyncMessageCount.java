@@ -8,21 +8,28 @@ import org.bukkit.ChatColor;
 public class AsyncMessageCount extends Thread {
 	@Override
 	public void run() {
-		Ache.cleanItemThread.forEach(x -> {
+		for (Thread asyncItem : Ache.cleanItemThread) {
 			try {
-				x.join();
-				String infoMsg = ClearLagg.cleanMessage;
-				infoMsg = infoMsg.replace("{item}", String.valueOf(Ache.itemCount.get()))
-						.replace("{monster}", String.valueOf(Ache.entityCount.get()));
-				infoMsg = ChatColor.translateAlternateColorCodes('&', infoMsg);
-				ClearLagg.broadCastMsg(infoMsg);
-				LaggLogger.info(infoMsg);
-				LaggLogger.info("Find "+Ache.houseCount.get()+" houses.");
-				LaggLogger.info("Used "+Ache.cleanItemThread.size()+" threads to clean drop item.");
-				LaggLogger.info("Used "+Ache.cleanEntityThread.size()+" threads to clean monsters.");
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				asyncItem.join();
+			} catch (InterruptedException exc) {
+				exc.printStackTrace();
 			}
-		});
+		}
+		for (Thread async : Ache.cleanEntityThread) {
+			try {
+				async.join();
+			} catch (InterruptedException exc) {
+				exc.printStackTrace();
+			}
+		}
+		String infoMsg = ClearLagg.cleanMessage;
+		infoMsg = infoMsg.replace("{item}", String.valueOf(Ache.itemCount.get()))
+						.replace("{monster}", String.valueOf(Ache.entityCount.get()));
+		infoMsg = ChatColor.translateAlternateColorCodes('&', infoMsg);
+		ClearLagg.broadCastMsg(infoMsg);
+		LaggLogger.info(infoMsg);
+		LaggLogger.info("Find "+Ache.houseCount.get()+" houses.");
+		LaggLogger.info("Used "+Ache.cleanItemThread.size()+" threads to clean drop item.");
+		LaggLogger.info("Used "+Ache.cleanEntityThread.size()+" threads to clean monsters.");
 	}
 }

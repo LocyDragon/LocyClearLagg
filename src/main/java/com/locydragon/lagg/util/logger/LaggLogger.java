@@ -15,6 +15,7 @@ public class LaggLogger {
 	public static File ioFile;
 	public static List<String> logs = new ArrayList<>();
 	public static FileWriter writer;
+	public static final Object object = new Object();
 
 	static {
 		ioFile = new File(path);
@@ -31,7 +32,7 @@ public class LaggLogger {
 		}
 	}
 
-	public static synchronized void info(String msg, boolean onConsole) {
+	public static void info(String msg, boolean onConsole) {
 		Date now = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 		String dateString = format.format(now);
@@ -47,7 +48,7 @@ public class LaggLogger {
 		}
 	}
 
-	public static synchronized void info(String msg) {
+	public static void info(String msg) {
 		info(msg, false);
 	}
 }

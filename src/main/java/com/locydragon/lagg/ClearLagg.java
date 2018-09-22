@@ -68,7 +68,7 @@ public class ClearLagg extends JavaPlugin {
 					broadCastMsg(loggerMsg);
 					LaggLogger.info(loggerMsg);
 				}
-				if (counterRunnable.equals(period)) {
+				if (counterRunnable == period) {
 					cleanUp();
 					counterRunnable = 0;
 				}
@@ -82,6 +82,7 @@ public class ClearLagg extends JavaPlugin {
 	}
 
 	public static void cleanUp() {
+		LaggLogger.info("====>Last cleaned monster "+Ache.entityCount.get()+". Item count "+Ache.itemCount.get());
 		Ache.needClean.clear();
 		Ache.loadChunks.clear();
 		Ache.playerLocation.clear();
@@ -91,9 +92,7 @@ public class ClearLagg extends JavaPlugin {
 		Ache.entityCount.set(0);
 		Ache.cleanEntityThread.clear();
 		for (World worldOnline : Bukkit.getWorlds()) {
-			Vector<Chunk> chunkList = new Vector<>();
-			chunkList.addAll(Arrays.asList(worldOnline.getLoadedChunks()));
-			Ache.loadChunks.put(worldOnline, chunkList.toArray(new Chunk[chunkList.size()]));
+			Ache.loadChunks.put(worldOnline, worldOnline.getLoadedChunks());
 		}
 		for (Player online : Bukkit.getOnlinePlayers()) {
 			Ache.playerLocation.add(online.getLocation());
