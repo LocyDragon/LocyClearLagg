@@ -1,6 +1,7 @@
 package com.locydragon.lagg;
 
 
+import com.locydragon.lagg.async.AsyncEntityCleaner;
 import com.locydragon.lagg.async.AsyncItemCleaner;
 import com.locydragon.lagg.async.AsyncMessageCount;
 import com.locydragon.lagg.async.AsyncThreadMonitor;
@@ -88,6 +89,7 @@ public class ClearLagg extends JavaPlugin {
 		Ache.itemCount.set(0);
 		Ache.houseCount.set(0);
 		Ache.entityCount.set(0);
+		Ache.cleanEntityThread.clear();
 		for (World worldOnline : Bukkit.getWorlds()) {
 			Vector<Chunk> chunkList = new Vector<>();
 			chunkList.addAll(Arrays.asList(worldOnline.getLoadedChunks()));
@@ -104,6 +106,14 @@ public class ClearLagg extends JavaPlugin {
 				cleaner.setDaemon(true);
 				cleaner.setPriority(Thread.MAX_PRIORITY);
 				cleaner.start();
+			}
+			{
+				AsyncEntityCleaner cleanerEntity = new AsyncEntityCleaner(world);
+				Ache.loadThreads.add(cleanerEntity);
+				Ache.cleanEntityThread.add(cleanerEntity);
+				cleanerEntity.setDaemon(true);
+				cleanerEntity.setPriority(Thread.MAX_PRIORITY);
+				cleanerEntity.start();
 			}
 		}
 		AsyncMessageCount counter = new AsyncMessageCount();
