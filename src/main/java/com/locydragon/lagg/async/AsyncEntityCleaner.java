@@ -4,46 +4,44 @@ import com.locydragon.lagg.ClearLagg;
 import com.locydragon.lagg.async.sync.ThreadUnsafeMethod;
 import com.locydragon.lagg.listeners.ache.Ache;
 import com.locydragon.lagg.neural.AutoHouseCheck;
-import com.locydragon.lagg.util.ItemContainer;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
+import org.bukkit.entity.Monster;
 
-
-public class AsyncItemCleaner extends Thread {
+public class AsyncEntityCleaner extends Thread {
 	public World target;
-	public AsyncItemCleaner(World world) {
-		this.target = world;
+	public AsyncEntityCleaner(World inWhich) {
+		target = inWhich;
 	}
 
 	@Override
 	public void run() {
-		for (Chunk chunk : Ache.loadChunks.get(target)) {
+		for (Chunk chunk : Ache.loadChunks.get(this.target)) {
 			if (AutoHouseCheck.isHouse(chunk)) {
 				Ache.houseCount.incrementAndGet();
 				continue;
 			}
 			Father:
 			for (Entity inChunk : new ThreadUnsafeMethod().getEntites(chunk)) {
-				if (!(inChunk instanceof Item)) {
+				if (!(inChunk instanceof Monster)) {
 					continue Father;
 				}
 				for (Location playerLoc : Ache.playerLocation) {
 					if (playerLoc.getWorld().equals(inChunk.getWorld())) {
-						if (inChunk.getLocation().distance(playerLoc) <= ClearLagg.maxDistance) {
+						if (inChunk.getLocation().distance(playerLoc) <= ClearLagg.maxEntityDistance) {
 							continue Father;
 						}
 					}
 				}
-				for (ItemContainer container : Ache.containerVector) {
-					if (container.getTarget().getUniqueId().equals(inChunk.getUniqueId())) {
+				for (Entity nonCleanEntity : Ache.craftEntityVector) {
+					if (nonCleanEntity.getUniqueId().equals(inChunk.getUniqueId())) {
 						continue Father;
 					}
 				}
 				inChunk.remove();
-				Ache.itemCount.incrementAndGet();
+				Ache.entityCount.incrementAndGet();
 			}
 		}
 	}

@@ -18,7 +18,7 @@ public class AsyncMessageCount extends Thread {
 				ClearLagg.broadCastMsg(infoMsg);
 				LaggLogger.info(infoMsg);
 				LaggLogger.info("Find "+Ache.houseCount.get()+" houses.");
-				LaggLogger.info("Used "+Ache.cleanItemThread.size()+" to clean drop item.");
+				LaggLogger.info("Used "+Ache.cleanItemThread.size()+" threads to clean drop item.");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

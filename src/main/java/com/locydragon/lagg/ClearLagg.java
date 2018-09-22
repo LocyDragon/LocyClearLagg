@@ -34,6 +34,7 @@ public class ClearLagg extends JavaPlugin {
 	public static Integer counterRunnable = 0;
 	public static Integer period = 0;
 	public static Integer noticeBeforeTime;
+	public static Integer maxEntityDistance = 0;
 	@Override
 	public void onEnable() {
 		instance = this;
@@ -55,6 +56,7 @@ public class ClearLagg extends JavaPlugin {
 		noticeBeforeTime = config.getInt("settings.noticeBeforeTime");
 		cleanMessage = config.getString("message.CleanMsg");
 		beforeCleanMsg = config.getString("message.BeforeClean");
+		maxEntityDistance = config.getInt("settings.EntityCleanDistance");
 		new BukkitRunnable() {
 			@Override
 			public void run() {
