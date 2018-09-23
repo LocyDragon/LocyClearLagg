@@ -12,15 +12,11 @@ import com.locydragon.lagg.listeners.ache.Ache;
 import com.locydragon.lagg.util.logger.LaggLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.Arrays;
-import java.util.Vector;
 
 /**
  * @author LocyDragon
@@ -73,7 +69,7 @@ public class ClearLagg extends JavaPlugin {
 					counterRunnable = 0;
 				}
 			}
-		}.runTaskTimerAsynchronously(this, 0L, 20);
+		}.runTaskTimer(this, 0L, 20);
 	}
 
 	@Override
@@ -91,6 +87,7 @@ public class ClearLagg extends JavaPlugin {
 		Ache.houseCount.set(0);
 		Ache.entityCount.set(0);
 		Ache.cleanEntityThread.clear();
+		Ache.unlessEntity.clear();
 		for (World worldOnline : Bukkit.getWorlds()) {
 			Ache.loadChunks.put(worldOnline, worldOnline.getLoadedChunks());
 		}

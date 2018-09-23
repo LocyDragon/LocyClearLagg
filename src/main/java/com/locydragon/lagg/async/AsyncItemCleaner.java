@@ -1,19 +1,22 @@
 package com.locydragon.lagg.async;
 
 import com.locydragon.lagg.ClearLagg;
-import com.locydragon.lagg.async.sync.ThreadUnsafeMethod;
 import com.locydragon.lagg.listeners.ache.Ache;
 import com.locydragon.lagg.neural.AutoHouseCheck;
 import com.locydragon.lagg.util.ItemContainer;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 
+import java.util.concurrent.locks.LockSupport;
+
 
 public class AsyncItemCleaner extends Thread {
 	public World target;
+	private Entity[] entityOnline;
 	public AsyncItemCleaner(World world) {
 		this.target = world;
 	}
@@ -25,8 +28,13 @@ public class AsyncItemCleaner extends Thread {
 				Ache.houseCount.incrementAndGet();
 				continue;
 			}
+			Bukkit.getScheduler().runTask(ClearLagg.instance, () -> {
+				entityOnline = chunk.getEntities();
+				LockSupport.unpark(AsyncItemCleaner.this);
+			});
+			LockSupport.park();
 			Father:
-			for (Entity inChunk : new ThreadUnsafeMethod().getEntites(chunk)) {
+			for (Entity inChunk : entityOnline) {
 				if (!(inChunk instanceof Item)) {
 					continue Father;
 				}
@@ -42,7 +50,7 @@ public class AsyncItemCleaner extends Thread {
 						continue Father;
 					}
 				}
-				inChunk.remove();
+				Ache.unlessEntity.add(inChunk);
 				Ache.itemCount.incrementAndGet();
 			}
 		}

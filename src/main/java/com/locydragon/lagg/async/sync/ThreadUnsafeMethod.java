@@ -8,6 +8,10 @@ import org.bukkit.entity.Entity;
 public class ThreadUnsafeMethod {
 	public static final Object monitor = new Object();
 	private Entity[] entity = new Entity[0];
+	@Deprecated
+	/**
+	 * has a bug.but cannot get entity safely;For getEntites method may be thread safe.
+	 */
 	public Entity[] getEntites(Chunk inWhich) {
 		synchronized (monitor) {
 			Bukkit.getScheduler().runTask(ClearLagg.instance, () -> {

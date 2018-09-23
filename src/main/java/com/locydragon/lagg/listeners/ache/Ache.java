@@ -16,10 +16,11 @@ public class Ache {
 	public static ConcurrentHashMap<World, Chunk[]> loadChunks = new ConcurrentHashMap<>();
 	public static Vector<Entity> needClean = new Vector<>();
 	public static Vector<Location> playerLocation = new Vector<>();
-	public static SyncInteger itemCount = new SyncInteger();
+	public static SyncInteger itemCount = new SyncInteger(); // i am afraid of ABA problem!So i created a class to do the thread safe.
 	public static SyncInteger houseCount = new SyncInteger();
 	public static SyncInteger entityCount = new SyncInteger();
 	public static final Vector<Thread> cleanItemThread = new Vector<>();
 	public static final Vector<Entity> craftEntityVector = new Vector<>();
 	public static final Vector<Thread> cleanEntityThread = new Vector<>();
+	public static final Vector<Entity> unlessEntity = new Vector<>();
 }
