@@ -12,20 +12,22 @@ public class NeuralNetwork {
 	public static MultiLayerPerceptron actor
 			= new MultiLayerPerceptron(TransferFunctionType.SIGMOID, 5, 14, 1);
 	public static DataSet dataTraining = new DataSet(2, 1);
+	public static File dataFile;
 	static {
-		File dataFile = new File(dataFileURL);
-		if (dataFile.exists()) {
-			dataTraining =
-					DataSet.createFromFile(dataFileURL, 2, 1, "\t", true);
-			actor.learn(dataTraining);
-		} else {
+		dataFile = new File(dataFileURL);
+		if (!dataFile.exists()) {
 			dataFile.getParentFile().mkdirs();
 			try {
 				dataFile.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else {
+			dataTraining =
+					DataSet.createFromFile(dataFileURL, 2, 1, "\t", true);
+			actor.learn(dataTraining);
 		}
-
 	}
+
+	public static void init() {}
 }

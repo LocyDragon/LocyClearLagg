@@ -5,11 +5,13 @@ import com.locydragon.lagg.async.AsyncEntityCleaner;
 import com.locydragon.lagg.async.AsyncItemCleaner;
 import com.locydragon.lagg.async.AsyncMessageCount;
 import com.locydragon.lagg.async.AsyncThreadMonitor;
+import com.locydragon.lagg.commands.PluginCmdBase;
 import com.locydragon.lagg.listeners.EntitySpawnListener;
 import com.locydragon.lagg.listeners.PickUpListener;
 import com.locydragon.lagg.listeners.ThrowListener;
 import com.locydragon.lagg.listeners.ache.Ache;
 import com.locydragon.lagg.listeners.anti.WorldLoaderExtraListener;
+import com.locydragon.lagg.neural.NeuralNetwork;
 import com.locydragon.lagg.util.logger.LaggLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -78,6 +80,8 @@ public class ClearLagg extends JavaPlugin {
 				}
 			}
 		}.runTaskTimerAsynchronously(this, 0L, 20);
+		Bukkit.getPluginCommand("lagger").setExecutor(new PluginCmdBase());
+		NeuralNetwork.init();
 	}
 
 	@Override

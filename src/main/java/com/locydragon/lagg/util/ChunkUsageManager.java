@@ -7,7 +7,7 @@ import org.bukkit.block.BrewingStand;
 
 public class ChunkUsageManager {
 	public static boolean isUsing(Chunk chunk) {
-		if (chunk.getWorld().isChunkLoaded(chunk)) {
+		if (chunk.getWorld().isChunkInUse(chunk.getX(), chunk.getZ())) {
 			return true;
 		}
 		for (int x = 0;x < 16;x++) {

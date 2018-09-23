@@ -16,7 +16,6 @@ public class LaggLogger {
 	public static List<String> logs = new ArrayList<>();
 	public static FileWriter writer;
 	public static final Object object = new Object();
-
 	static {
 		ioFile = new File(path);
 		if (!ioFile.exists()) {

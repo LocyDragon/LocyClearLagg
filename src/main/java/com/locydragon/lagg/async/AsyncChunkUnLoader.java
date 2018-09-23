@@ -29,7 +29,7 @@ public class AsyncChunkUnLoader extends Thread {
 			String msg = ClearLagg.cleanChunkMsg;
 			msg = ChatColor.translateAlternateColorCodes('&', msg)
 					.replace("{chunk}", String.valueOf(arrayChunk.size()));
-			Bukkit.getLogger().info(msg);
+			Bukkit.broadcastMessage(msg);
 		});
 	}
 }
