@@ -16,7 +16,7 @@ public class ChunkUsageManager {
 					Block there = chunk.getBlock(x, y, z);
 					if (there.getType() == Material.BURNING_FURNACE
 							|| there.getType() == Material.BREWING_STAND)
-						if (there.getType() == Material.BURNING_FURNACE) {
+						if (there.getType() == Material.BREWING_STAND) {
 							BrewingStand target = (BrewingStand)there.getState();
 							if (target.getBrewingTime() > 0) {
 								return true;
@@ -24,7 +24,7 @@ public class ChunkUsageManager {
 								return false;
 							}
 						}
-						return true;
+					return true;
 				}
 			}
 		}

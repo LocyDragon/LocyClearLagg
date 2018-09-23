@@ -9,6 +9,7 @@ import com.locydragon.lagg.listeners.EntitySpawnListener;
 import com.locydragon.lagg.listeners.PickUpListener;
 import com.locydragon.lagg.listeners.ThrowListener;
 import com.locydragon.lagg.listeners.ache.Ache;
+import com.locydragon.lagg.listeners.anti.WorldLoaderExtraListener;
 import com.locydragon.lagg.util.logger.LaggLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,6 +33,9 @@ public class ClearLagg extends JavaPlugin {
 	public static Integer period = 0;
 	public static Integer noticeBeforeTime;
 	public static Integer maxEntityDistance = 0;
+	public static String cleanChunkMsg;
+	public static Integer afterClean;
+	public static boolean useChunkClean = true;
 	@Override
 	public void onEnable() {
 		instance = this;
@@ -43,6 +47,7 @@ public class ClearLagg extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new ThrowListener(), this);
 		Bukkit.getPluginManager().registerEvents(new PickUpListener(), this);
 		Bukkit.getPluginManager().registerEvents(new EntitySpawnListener(), this);
+		Bukkit.getPluginManager().registerEvents(new WorldLoaderExtraListener(), this);
 		maxDistance = config.getInt("settings.ItemCleanDistance");
 		AsyncThreadMonitor monitor = new AsyncThreadMonitor();
 		monitor.setDaemon(true);
@@ -54,6 +59,9 @@ public class ClearLagg extends JavaPlugin {
 		cleanMessage = config.getString("message.CleanMsg");
 		beforeCleanMsg = config.getString("message.BeforeClean");
 		maxEntityDistance = config.getInt("settings.EntityCleanDistance");
+		cleanChunkMsg = config.getString("message.ChunkCleanMsg", "&7[&a区块清理&7] &e{chunk} &b个区块已经被我们清理辣~");
+		afterClean = config.getInt("settings.ChunkCleanAfterEntity", 30);
+		useChunkClean = afterClean < period;
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -69,7 +77,7 @@ public class ClearLagg extends JavaPlugin {
 					counterRunnable = 0;
 				}
 			}
-		}.runTaskTimer(this, 0L, 20);
+		}.runTaskTimerAsynchronously(this, 0L, 20);
 	}
 
 	@Override

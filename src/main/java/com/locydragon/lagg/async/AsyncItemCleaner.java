@@ -10,8 +10,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
 
+import java.util.Random;
 import java.util.concurrent.locks.LockSupport;
 
 
@@ -25,7 +25,7 @@ public class AsyncItemCleaner extends Thread {
 	@Override
 	public void run() {
 		for (Chunk chunk : Ache.loadChunks.get(target)) {
-			if (AutoHouseCheck.isHouse(chunk)) {
+			if (AutoHouseCheck.isHouse(chunk) && new Random().nextBoolean()) {
 				Ache.houseCount.incrementAndGet();
 				continue;
 			}
