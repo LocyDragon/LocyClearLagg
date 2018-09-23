@@ -23,4 +23,5 @@ public class Ache {
 	public static final Vector<Entity> craftEntityVector = new Vector<>();
 	public static final Vector<Thread> cleanEntityThread = new Vector<>();
 	public static final Vector<Entity> unlessEntity = new Vector<>();
+	public static SyncInteger threadCountExtra = new SyncInteger();
 }
