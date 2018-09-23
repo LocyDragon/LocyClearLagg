@@ -4,16 +4,27 @@ import com.locydragon.lagg.ClearLagg;
 import com.locydragon.lagg.listeners.ache.Ache;
 import com.locydragon.lagg.util.logger.LaggLogger;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 public class EntitySpawnListener implements Listener {
 	@EventHandler
 	public void onEntitySpawn(CreatureSpawnEvent e) {
-		Ache.craftEntityVector.add(e.getEntity());
-		LaggLogger.info("Add entity "+e.getEntity().getUniqueId().toString()
-				+" to Stack.Type: "+e.getEntity().getType().toString());
-		removeAsync(e.getEntity());
+		Entity inChunk = e.getEntity();
+		if (!(inChunk instanceof Monster || inChunk.getType() == EntityType.ARROW
+				|| inChunk.getType() == EntityType.BAT || inChunk.getType() == EntityType.EXPERIENCE_ORB)) {
+			return;
+		}
+		Thread async = new Thread(() -> {
+			Ache.craftEntityVector.add(e.getEntity());
+			LaggLogger.info("Add entity " + e.getEntity().getUniqueId().toString()
+					+ " to Stack.Type: " + e.getEntity().getType().toString());
+			removeAsync(e.getEntity());
+		});
+		async.start();
+		Ache.loadThreads.add(async);
 	}
 
 	public void removeAsync(Entity entity) {

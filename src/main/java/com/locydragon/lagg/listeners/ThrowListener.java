@@ -29,6 +29,7 @@ public class ThrowListener implements Listener {
 			removeAsync(container);
 		});
 		asyncRunner.start();
+		Ache.loadThreads.add(asyncRunner);
 	}
 
 	@EventHandler
@@ -52,6 +53,7 @@ public class ThrowListener implements Listener {
 			}
 		});
 		asyncRunner.start();
+		Ache.loadThreads.add(asyncRunner);
 	}
 
 	public void removeAsync(ItemContainer container) {

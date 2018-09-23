@@ -6,6 +6,7 @@ import com.locydragon.lagg.util.logger.LaggLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 
 public class AsyncMessageCount extends Thread {
 	@Override
@@ -24,16 +25,33 @@ public class AsyncMessageCount extends Thread {
 				exc.printStackTrace();
 			}
 		}
+		System.gc();
+		Runtime.getRuntime().freeMemory();
+		Runtime.getRuntime().gc();
 		Bukkit.getScheduler().runTask(ClearLagg.instance, () -> {
 			int amount = 0;
 			for (World world : Bukkit.getWorlds()) {
-				amount += world.getEntities().size();
+				for (Entity entity : world.getEntities()) {
+					if (!entity.isDead()) {
+						amount++;
+					}
+				}
 			}
 			LaggLogger.info("====> Before clean entity amount: "+amount);
-			Ache.unlessEntity.forEach(x -> x.remove());
+			LaggLogger.info("====> Clean amount: "+Ache.unlessEntity.size());
+			for (Entity entity : Ache.unlessEntity) {
+				if (!entity.getLocation().getChunk().isLoaded()) {
+					entity.getLocation().getChunk().load();
+				}
+				entity.remove();
+			}
 			amount = 0;
 			for (World world : Bukkit.getWorlds()) {
-				amount += world.getEntities().size();
+				for (Entity entity : world.getEntities()) {
+					if (!entity.isDead()) {
+						amount++;
+					}
+				}
 			}
 			LaggLogger.info("====> After clean entity amount: "+amount);
 		});

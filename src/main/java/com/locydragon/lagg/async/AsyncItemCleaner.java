@@ -16,7 +16,7 @@ import java.util.concurrent.locks.LockSupport;
 
 public class AsyncItemCleaner extends Thread {
 	public World target;
-	private Entity[] entityOnline;
+	private Entity[] entityOnline = null;
 	public AsyncItemCleaner(World world) {
 		this.target = world;
 	}

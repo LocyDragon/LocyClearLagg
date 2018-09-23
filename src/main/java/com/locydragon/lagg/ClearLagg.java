@@ -74,7 +74,9 @@ public class ClearLagg extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-
+		LaggLogger.info("====[LocyClearLagg]====", true);
+		LaggLogger.info("新一代多线程化智能清理插件已经关闭啦!", true);
+		LaggLogger.info("作者: LocyDragon QQ 2424441676", true);
 	}
 
 	public static void cleanUp() {
