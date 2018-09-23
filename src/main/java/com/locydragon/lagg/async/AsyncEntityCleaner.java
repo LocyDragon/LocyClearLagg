@@ -34,8 +34,17 @@ public class AsyncEntityCleaner extends Thread {
 			LockSupport.park();
 			Father:
 			for (Entity inChunk : entityOnline) { // need to be sync
-				if (!(inChunk instanceof Monster || inChunk.getType() == EntityType.ARROW
-				|| inChunk.getType() == EntityType.BAT || inChunk.getType() == EntityType.EXPERIENCE_ORB)) {
+				if (!(inChunk.getType() == EntityType.ZOMBIE || inChunk.getType() == EntityType.ARROW
+				|| inChunk.getType() == EntityType.BAT || inChunk.getType() == EntityType.EXPERIENCE_ORB
+				|| inChunk.getType() == EntityType.BLAZE || inChunk.getType() == EntityType.CAVE_SPIDER
+				|| inChunk.getType() == EntityType.CREEPER || inChunk.getType() == EntityType.ENDERMAN
+			    || inChunk.getType() == EntityType.FIREBALL || inChunk.getType() == EntityType.MAGMA_CUBE
+				|| inChunk.getType() == EntityType.PIG_ZOMBIE || inChunk.getType() == EntityType.SILVERFISH
+				|| inChunk.getType() == EntityType.SKELETON || inChunk.getType() == EntityType.SLIME
+			    || inChunk.getType() == EntityType.SPIDER || inChunk.getType() == EntityType.WITCH)) { //一定优化 不会鸽
+					continue Father;
+				}
+				if (inChunk.getType() == EntityType.ENDER_DRAGON || inChunk.getType() == EntityType.WITHER) {
 					continue Father;
 				}
 				for (Location playerLoc : Ache.playerLocation) {

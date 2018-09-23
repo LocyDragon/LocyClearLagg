@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 public class ThrowListener implements Listener {
 	@EventHandler
 	public void onPlayerThrow(PlayerDropItemEvent e) {
-		Thread asyncRunner = new Thread(() -> {
+		Runnable runnable = () -> {
 			Item item = e.getItemDrop();
 			ItemContainer container = ItemContainer.getByItemEntity(item);
 			if (container == null) {
@@ -27,33 +27,30 @@ public class ThrowListener implements Listener {
 				async.start();
 			}
 			removeAsync(container);
-		});
-		asyncRunner.start();
-		Ache.loadThreads.add(asyncRunner);
+		};
+		EntitySpawnListener.threadPool.execute(runnable);
+		Ache.threadCountExtra.incrementAndGet();
 	}
 
 	@EventHandler
 	public void onItemSpawn(ItemSpawnEvent e) {
-		Thread asyncRunner = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				Item item = e.getEntity();
-				ItemContainer container = ItemContainer.getByItemEntity(item);
-				if (container == null) {
-					new ItemContainer(item);
-				} else {
-					Ache.containerVector.remove(container);
-					ItemContainer.containerMap.remove(item.getUniqueId());
-					new ItemContainer(item);
-					Thread async = new Thread(() -> LaggLogger.info("Add id: "+container.getId()+
-							" item to stack,name: "+container.getTarget().getCustomName()+"!"));
-					async.start();
-				}
-				removeAsync(container);
+		Runnable runnable = () -> {
+			Item item = e.getEntity();
+			ItemContainer container = ItemContainer.getByItemEntity(item);
+			if (container == null) {
+				new ItemContainer(item);
+			} else {
+				Ache.containerVector.remove(container);
+				ItemContainer.containerMap.remove(item.getUniqueId());
+				new ItemContainer(item);
+				Thread async = new Thread(() -> LaggLogger.info("Add id: "+container.getId()+
+						" item to stack,name: "+container.getTarget().getCustomName()+"!"));
+				async.start();
 			}
-		});
-		asyncRunner.start();
-		Ache.loadThreads.add(asyncRunner);
+			removeAsync(container);
+		};
+		EntitySpawnListener.threadPool.execute(runnable);
+		Ache.threadCountExtra.incrementAndGet();
 	}
 
 	public void removeAsync(ItemContainer container) {

@@ -9,13 +9,14 @@ public class AsyncThreadMonitor extends Thread {
 		while (true) {
 			try {
 				Thread.sleep(20 * 1000);
-				int amountBefore = Ache.loadThreads.size();
+				int amountBefore = Ache.loadThreads.size() + Ache.threadCountExtra.get();
 				for (int i = 0;i < Ache.loadThreads.size();i++) {
 					Thread nowThread = Ache.loadThreads.get(i);
 					if (!nowThread.isAlive()) {
 						Ache.loadThreads.remove(i);
 					}
 				}
+				Ache.threadCountExtra.set(0);
 				int amountAfter = Ache.loadThreads.size();
 				LaggLogger.info("Thread add to stack amount: "+amountBefore+" per 20 seconds.");
 				LaggLogger.info("Now, "+amountAfter+" threads is alive.");

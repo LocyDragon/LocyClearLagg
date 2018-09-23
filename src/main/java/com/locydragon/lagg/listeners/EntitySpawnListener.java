@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class EntitySpawnListener implements Listener {
-	private ExecutorService threadPool = Executors.newCachedThreadPool();
+	protected static ExecutorService threadPool = Executors.newCachedThreadPool();
 	@EventHandler
 	public void onEntitySpawn(CreatureSpawnEvent e) {
 		Runnable runnable = () -> {
@@ -25,7 +25,7 @@ public class EntitySpawnListener implements Listener {
 		Ache.threadCountExtra.incrementAndGet();
 	}
 
-	public void removeAsync(Entity entity) {
+	private void removeAsync(Entity entity) {
 		Runnable runnable = () -> {
 			try {
 				Thread.sleep(1000 * ClearLagg.config.getInt("settings.EntitySpawnDelay"));
@@ -37,19 +37,7 @@ public class EntitySpawnListener implements Listener {
 			}
 			LaggLogger.info("Remove entity "+entity.getUniqueId().toString()+" from stack.");
 		};
-		Thread async = new Thread(() -> {
-			try {
-				Thread.sleep(1000 * ClearLagg.config.getInt("settings.EntitySpawnDelay"));
-			} catch (Exception exc) {
-				exc.printStackTrace();
-			}
-			if (Ache.craftEntityVector.contains(entity)) {
-				Ache.craftEntityVector.remove(entity);
-			}
-			LaggLogger.info("Remove entity "+entity.getUniqueId().toString()+" from stack.");
-		});
-		async.setDaemon(true);
-		async.start();
-		Ache.loadThreads.add(async);
+		threadPool.execute(runnable);
+		Ache.threadCountExtra.incrementAndGet();
 	}
 }

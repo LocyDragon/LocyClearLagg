@@ -9,6 +9,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 
 import java.util.concurrent.locks.LockSupport;
@@ -35,7 +36,7 @@ public class AsyncItemCleaner extends Thread {
 			LockSupport.park();
 			Father:
 			for (Entity inChunk : entityOnline) {
-				if (!(inChunk instanceof Item)) {
+				if (inChunk.getType() != EntityType.DROPPED_ITEM) {
 					continue Father;
 				}
 				for (Location playerLoc : Ache.playerLocation) {
