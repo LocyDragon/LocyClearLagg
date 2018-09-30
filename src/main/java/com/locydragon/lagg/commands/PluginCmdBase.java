@@ -67,8 +67,9 @@ public class PluginCmdBase implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED+"你没有选择点B.");
 				return false;
 			}
-			if (!(Math.pow(selectOne.distance(selectSecond), 2) > 768)) { //勾股定理算出的16x16x16正方体的对角线距离
+			if ((Math.pow(selectOne.distance(selectSecond), 2) != 675)) { //勾股定理算出的16x16x16正方体的对角线距离
 				sender.sendMessage(ChatColor.RED+"不规范的选择区(需要16x16x16)");
+				sender.sendMessage(ChatColor.RED+"实际大小: "+Math.pow(selectOne.distance(selectSecond), 2));
 				return false;
 			}
 			/**
