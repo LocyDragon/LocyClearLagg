@@ -11,15 +11,21 @@ import com.locydragon.lagg.listeners.PickUpListener;
 import com.locydragon.lagg.listeners.ThrowListener;
 import com.locydragon.lagg.listeners.ache.Ache;
 import com.locydragon.lagg.listeners.anti.WorldLoaderExtraListener;
+import com.locydragon.lagg.listeners.chunk3d.Chunk3DSelectorListener;
 import com.locydragon.lagg.neural.NeuralNetwork;
 import com.locydragon.lagg.util.logger.LaggLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author LocyDragon
@@ -38,6 +44,8 @@ public class ClearLagg extends JavaPlugin {
 	public static String cleanChunkMsg;
 	public static Integer afterClean;
 	public static boolean useChunkClean = true;
+	public static List<String> blockWeight = new ArrayList<>();
+	public static ConcurrentHashMap<String,Integer> mapWeight = new ConcurrentHashMap<>();
 	@Override
 	public void onEnable() {
 		instance = this;
@@ -50,6 +58,7 @@ public class ClearLagg extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new PickUpListener(), this);
 		Bukkit.getPluginManager().registerEvents(new EntitySpawnListener(), this);
 		Bukkit.getPluginManager().registerEvents(new WorldLoaderExtraListener(), this);
+		Bukkit.getPluginManager().registerEvents(new Chunk3DSelectorListener(), this);
 		maxDistance = config.getInt("settings.ItemCleanDistance");
 		AsyncThreadMonitor monitor = new AsyncThreadMonitor();
 		monitor.setDaemon(true);
@@ -82,6 +91,13 @@ public class ClearLagg extends JavaPlugin {
 		}.runTaskTimerAsynchronously(this, 0L, 20);
 		Bukkit.getPluginCommand("lagger").setExecutor(new PluginCmdBase());
 		NeuralNetwork.init();
+		blockWeight = getConfig().getStringList("NeuralNetwork.BlockWeight");
+		for (String line : blockWeight) {
+			int materialID = Integer.valueOf(line.split("-")[0]);
+			int weight = Integer.valueOf(line.split("-")[1]);
+			String materialName = com.locydragon.lagg.neural.data.Material.getMaterial(materialID).toString();
+			mapWeight.put(materialName, weight);
+		}
 	}
 
 	@Override

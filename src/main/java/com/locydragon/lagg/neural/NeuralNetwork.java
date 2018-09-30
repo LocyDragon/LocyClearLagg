@@ -10,7 +10,7 @@ import java.io.IOException;
 public class NeuralNetwork {
 	public static final String dataFileURL = ".//plugins//LocyClearLagg//Data//Neural.dat";
 	public static MultiLayerPerceptron actor
-			= new MultiLayerPerceptron(TransferFunctionType.SIGMOID, 5, 14, 1);
+			= new MultiLayerPerceptron(TransferFunctionType.TANH, 5, 14, 1);
 	public static DataSet dataTraining = new DataSet(2, 1);
 	public static File dataFile;
 	static {
