@@ -4,6 +4,7 @@ import com.locydragon.lagg.ClearLagg;
 import com.locydragon.lagg.listeners.chunk3d.Chunk3DSelectorListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -78,6 +79,18 @@ public class PluginCmdBase implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED+"不符合规范的选择区，需要(16x16x16).");
 				return false;
 			}
+			Integer air = 0;
+			double blockWeight = 0;
+			for (Block eachBlock : forEach(selectOne, selectSecond)) {
+				if (eachBlock.getType() == Material.AIR) {
+					air++;
+				} else if (ClearLagg.mapWeight.keySet().contains(eachBlock.getType().toString())) {
+					blockWeight += ClearLagg.mapWeight.get(eachBlock.getType().toString());
+				}
+			}
+			sender.sendMessage(ChatColor.RED+"输出: [<value1>]: "+air+" ;[<value2>]: "+blockWeight+".");
+		} else if (args[0].equalsIgnoreCase("learn")) {
+
 		}
 		return false;
 	}

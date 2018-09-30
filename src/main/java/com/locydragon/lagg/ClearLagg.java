@@ -45,7 +45,7 @@ public class ClearLagg extends JavaPlugin {
 	public static Integer afterClean;
 	public static boolean useChunkClean = true;
 	public static List<String> blockWeight = new ArrayList<>();
-	public static ConcurrentHashMap<String,Integer> mapWeight = new ConcurrentHashMap<>();
+	public static ConcurrentHashMap<String,Double> mapWeight = new ConcurrentHashMap<>();
 	@Override
 	public void onEnable() {
 		instance = this;
@@ -94,7 +94,7 @@ public class ClearLagg extends JavaPlugin {
 		blockWeight = getConfig().getStringList("NeuralNetwork.BlockWeight");
 		for (String line : blockWeight) {
 			int materialID = Integer.valueOf(line.split("-")[0]);
-			int weight = Integer.valueOf(line.split("-")[1]);
+			double weight = Double.valueOf(line.split("-")[1]);
 			String materialName = com.locydragon.lagg.neural.data.Material.getMaterial(materialID).toString();
 			mapWeight.put(materialName, weight);
 		}
