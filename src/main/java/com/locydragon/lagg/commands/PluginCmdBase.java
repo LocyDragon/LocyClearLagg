@@ -67,18 +67,27 @@ public class PluginCmdBase implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED+"你没有选择点B.");
 				return false;
 			}
+			if (!(Math.pow(selectOne.distance(selectSecond), 2) > 768)) { //勾股定理算出的16x16x16正方体的对角线距离
+				sender.sendMessage(ChatColor.RED+"不规范的选择区(需要16x16x16)");
+				return false;
+			}
+			/**
 			if (distanceLoc(selectOne.getBlockX(), selectSecond.getBlockX()) != 16) {
-				sender.sendMessage(ChatColor.RED+"不符合规范的选择区，需要(16x16x16).");
+				sender.sendMessage(ChatColor.RED+"不符合规范的X轴选择区，需要(16x16x16).");
+				sender.sendMessage(ChatColor.RED+"实际距离: "+distanceLoc(selectOne.getBlockX(), selectSecond.getBlockX()));
 				return false;
 			}
 			if (distanceLoc(selectOne.getBlockY(), selectSecond.getBlockY()) != 16) {
-				sender.sendMessage(ChatColor.RED+"不符合规范的选择区，需要(16x16x16).");
+				sender.sendMessage(ChatColor.RED+"不符合规范的Y轴选择区，需要(16x16x16).");
+				sender.sendMessage(ChatColor.RED+"实际距离: "+distanceLoc(selectOne.getBlockX(), selectSecond.getBlockX()));
 				return false;
 			}
 			if (distanceLoc(selectOne.getBlockZ(), selectSecond.getBlockZ()) != 16) {
-				sender.sendMessage(ChatColor.RED+"不符合规范的选择区，需要(16x16x16).");
+				sender.sendMessage(ChatColor.RED+"不符合规范的Z轴选择区，需要(16x16x16).");
+				sender.sendMessage(ChatColor.RED+"实际距离: "+distanceLoc(selectOne.getBlockX(), selectSecond.getBlockX()));
 				return false;
 			}
+			 **/
 			Integer air = 0;
 			double blockWeight = 0;
 			for (Block eachBlock : forEach(selectOne, selectSecond)) {

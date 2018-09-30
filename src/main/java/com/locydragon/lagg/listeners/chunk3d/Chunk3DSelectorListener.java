@@ -31,11 +31,11 @@ public class Chunk3DSelectorListener implements Listener {
 				if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 					selectLocationFirst.remove(e.getPlayer().getName());
 					selectLocationFirst.put(e.getPlayer().getName(), e.getClickedBlock().getLocation());
-					e.getPlayer().sendMessage(ChatColor.RED+"选取坐标点A.");
+					e.getPlayer().sendMessage(ChatColor.RED+"选取选择点A.");
 				} else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 					selectLocationSecond.remove(e.getPlayer().getName());
 					selectLocationSecond.put(e.getPlayer().getName(), e.getClickedBlock().getLocation());
-					e.getPlayer().sendMessage(ChatColor.RED+"选取坐标点B.");
+					e.getPlayer().sendMessage(ChatColor.RED+"选取选择点B.");
 				}
 			}
 		}

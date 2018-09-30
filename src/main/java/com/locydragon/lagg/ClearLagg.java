@@ -98,6 +98,7 @@ public class ClearLagg extends JavaPlugin {
 			String materialName = com.locydragon.lagg.neural.data.Material.getMaterial(materialID).toString();
 			mapWeight.put(materialName, weight);
 		}
+		LaggLogger.info("Loaded "+mapWeight.size()+" model.", true);
 	}
 
 	@Override
