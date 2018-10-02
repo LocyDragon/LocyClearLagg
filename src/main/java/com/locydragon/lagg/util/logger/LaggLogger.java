@@ -31,18 +31,20 @@ public class LaggLogger {
 	}
 
 	public static void info(String msg, boolean onConsole) {
-		Date now = new Date();
-		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-		String dateString = format.format(now);
-		msg = "["+dateString+"] " + msg + "\n";
+		if (ClearLagg.debug) {
+			Date now = new Date();
+			SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+			String dateString = format.format(now);
+			msg = "[" + dateString + "] " + msg + "\n";
+			logs.add(msg);
+			try {
+				writer.write(msg);
+			} catch (IOException io) {
+				io.printStackTrace();
+			}
+		}
 		if (onConsole) {
 			ClearLagg.instance.getLogger().info(msg);
-		}
-		logs.add(msg);
-		try {
-			writer.write(msg);
-		} catch (IOException io) {
-			io.printStackTrace();
 		}
 	}
 

@@ -55,6 +55,7 @@ public class ClearLagg extends JavaPlugin implements LearningEventListener {
 	public static Double paramFirst = 0.0;
 	public static Double paramSecond = 0.0;
 	public static Double paramLast = 0.0;
+	public static boolean debug = false;
 	@Override
 	public void onEnable() {
 		instance = this;
@@ -114,6 +115,8 @@ public class ClearLagg extends JavaPlugin implements LearningEventListener {
 		getLogger().info("开始机器学习..这可能需要一段时间..");
 		NeuralNetwork.init();
 		getLogger().info("加载完成.");
+		new Metrics(this);
+		debug = getConfig().getBoolean("settings.debug", false);
 	}
 
 	@Override
@@ -173,7 +176,9 @@ public class ClearLagg extends JavaPlugin implements LearningEventListener {
 
 	@Override
 	public void handleLearningEvent(LearningEvent learningEvent) {
-		MomentumBackpropagation object = (MomentumBackpropagation) learningEvent.getSource();
-		System.out.print(object.getCurrentIteration()+". Total network error : "+object.getTotalNetworkError());
+		if (debug) {
+			MomentumBackpropagation object = (MomentumBackpropagation) learningEvent.getSource();
+			System.out.print(object.getCurrentIteration() + ". Total network error : " + object.getTotalNetworkError());
+		}
 	}
 }
