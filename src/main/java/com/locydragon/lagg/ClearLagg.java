@@ -111,12 +111,13 @@ public class ClearLagg extends JavaPlugin implements LearningEventListener {
 			String materialName = com.locydragon.lagg.neural.data.Material.getMaterial(materialID).toString();
 			mapWeight.put(materialName, weight);
 		}
+		debug = getConfig().getBoolean("settings.debug", false);
 		getLogger().info("Loaded "+mapWeight.size()+" model.");
-		getLogger().info("开始机器学习..这可能需要一段时间..");
+		getLogger().info("开始机器学习..这可能需要一段时间..(1~10分钟，若长时间未响应，请重启服务器)");
+		getLogger().info("喝杯茶，少安毋躁~");
 		NeuralNetwork.init();
 		getLogger().info("加载完成.");
 		new Metrics(this);
-		debug = getConfig().getBoolean("settings.debug", false);
 	}
 
 	@Override
@@ -176,8 +177,12 @@ public class ClearLagg extends JavaPlugin implements LearningEventListener {
 
 	@Override
 	public void handleLearningEvent(LearningEvent learningEvent) {
+		MomentumBackpropagation object = (MomentumBackpropagation) learningEvent.getSource();
+		if (object.getCurrentIteration() > 50000) {
+			NeuralNetwork.actor.stopLearning();
+			NeuralNetwork.actor.reset();
+		}
 		if (debug) {
-			MomentumBackpropagation object = (MomentumBackpropagation) learningEvent.getSource();
 			System.out.print(object.getCurrentIteration() + ". Total network error : " + object.getTotalNetworkError());
 		}
 	}

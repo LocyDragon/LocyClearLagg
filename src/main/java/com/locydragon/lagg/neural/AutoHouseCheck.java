@@ -31,6 +31,9 @@ public class AutoHouseCheck {
 	 * @return 和房子的相似度 开区间: (0,1)
 	 */
 	public static double houseWeight(Chunk chunk) {
+		if (NeuralNetwork.actor.isEmpty()) {
+			return 0;
+		}
 		Double[] arraySort = null;
 		try {
 			try {
