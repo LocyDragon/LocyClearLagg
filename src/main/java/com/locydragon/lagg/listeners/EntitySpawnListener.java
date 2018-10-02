@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class EntitySpawnListener implements Listener {
-	protected static ExecutorService threadPool = Executors.newCachedThreadPool();
+	public static ExecutorService threadPool = Executors.newCachedThreadPool();
 	@EventHandler
 	public void onEntitySpawn(CreatureSpawnEvent e) {
 		Runnable runnable = () -> {

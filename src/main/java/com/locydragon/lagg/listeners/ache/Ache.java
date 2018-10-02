@@ -6,22 +6,22 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Ache {
-	public static final Vector<ItemContainer> containerVector = new Vector<ItemContainer>();
-	public static Vector<Thread> loadThreads = new Vector<>();
+	public static final ConcurrentLinkedQueue<ItemContainer> containerVector = new ConcurrentLinkedQueue<ItemContainer>();
+	public static ConcurrentLinkedQueue<Thread> loadThreads = new ConcurrentLinkedQueue<>();
 
 	public static ConcurrentHashMap<World, Chunk[]> loadChunks = new ConcurrentHashMap<>();
-	public static Vector<Entity> needClean = new Vector<>();
-	public static Vector<Location> playerLocation = new Vector<>();
+	public static ConcurrentLinkedQueue<Entity> needClean = new ConcurrentLinkedQueue<>();
+	public static ConcurrentLinkedQueue<Location> playerLocation = new ConcurrentLinkedQueue<>();
 	public static SyncInteger itemCount = new SyncInteger(); // i am afraid of ABA problem!So i created a class to do the thread safe.
 	public static SyncInteger houseCount = new SyncInteger();
 	public static SyncInteger entityCount = new SyncInteger();
-	public static final Vector<Thread> cleanItemThread = new Vector<>();
-	public static final Vector<Entity> craftEntityVector = new Vector<>();
-	public static final Vector<Thread> cleanEntityThread = new Vector<>();
-	public static final Vector<Entity> unlessEntity = new Vector<>();
+	public static final ConcurrentLinkedQueue<Thread> cleanItemThread = new ConcurrentLinkedQueue<>();
+	public static final ConcurrentLinkedQueue<Entity> craftEntityVector = new ConcurrentLinkedQueue<>();
+	public static final ConcurrentLinkedQueue<Thread> cleanEntityThread = new ConcurrentLinkedQueue<>();
+	public static final ConcurrentLinkedQueue<Entity> unlessEntity = new ConcurrentLinkedQueue<>();
 	public static SyncInteger threadCountExtra = new SyncInteger();
 }

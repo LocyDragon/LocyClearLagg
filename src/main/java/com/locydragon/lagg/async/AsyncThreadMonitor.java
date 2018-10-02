@@ -11,7 +11,7 @@ public class AsyncThreadMonitor extends Thread {
 				Thread.sleep(20 * 1000);
 				int amountBefore = Ache.loadThreads.size() + Ache.threadCountExtra.get();
 				for (int i = 0;i < Ache.loadThreads.size();i++) {
-					Thread nowThread = Ache.loadThreads.get(i);
+					Thread nowThread = (Thread)Ache.loadThreads.toArray()[i];
 					if (!nowThread.isAlive()) {
 						Ache.loadThreads.remove(i);
 					}

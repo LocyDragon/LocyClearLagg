@@ -2,7 +2,10 @@ package com.locydragon.lagg.commands;
 
 import com.locydragon.lagg.ClearLagg;
 import com.locydragon.lagg.listeners.chunk3d.Chunk3DSelectorListener;
+import com.locydragon.lagg.neural.AutoHouseCheck;
+import com.locydragon.lagg.neural.NeuralNetwork;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -25,7 +28,7 @@ public class PluginCmdBase implements CommandExecutor {
 			sender.sendMessage("§c您不是Op.无法使用此命令");
 			return false;
 		}
-		if (args[0].length() <= 0) {
+		if (args.length <= 0) {
 			sender.sendMessage("§a指令输入错误!");
 			return false;
 		}
@@ -99,8 +102,17 @@ public class PluginCmdBase implements CommandExecutor {
 				}
 			}
 			sender.sendMessage(ChatColor.RED+"输出: [<value1>]: "+air+" ;[<value2>]: "+blockWeight+".");
-		} else if (args[0].equalsIgnoreCase("learn")) {
-
+		} else if (args[0].equalsIgnoreCase("input")) {
+			if (args.length == 3) {
+				double valueOne = Double.valueOf(args[1]);
+				double valueSecond = Double.valueOf(args[2]);
+				sender.sendMessage(ChatColor.RED+"输出: "+NeuralNetwork.get(valueOne, valueSecond));
+			} else {
+				sender.sendMessage(ChatColor.RED+"使用/lagger input [<value1>] [<value2>]");
+			}
+		} else if (args[0].equalsIgnoreCase("chunk")) {
+			sender.sendMessage(AutoHouseCheck.forString(((Player)sender).getLocation().getChunk()));
+			sender.sendMessage(AutoHouseCheck.houseWeight(((Player)sender).getLocation().getChunk())+"");
 		}
 		return false;
 	}

@@ -10,6 +10,6 @@ public class WorldLoaderExtraListener implements Listener {
 		if (!e.getWorld().isAutoSave()) {
 			e.getWorld().setAutoSave(true);
 		}
-		e.getWorld().setKeepSpawnInMemory(false);
+		e.getWorld().setKeepSpawnInMemory(true);
 	}
 }

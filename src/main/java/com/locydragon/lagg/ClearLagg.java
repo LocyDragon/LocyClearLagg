@@ -16,21 +16,26 @@ import com.locydragon.lagg.neural.NeuralNetwork;
 import com.locydragon.lagg.util.logger.LaggLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.neuroph.core.events.LearningEvent;
+import org.neuroph.core.events.LearningEventListener;
+import org.neuroph.nnet.learning.MomentumBackpropagation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 /**
  * @author LocyDragon
  */
-public class ClearLagg extends JavaPlugin {
+public class ClearLagg extends JavaPlugin implements LearningEventListener {
 	public static FileConfiguration config = null;
 	public static ClearLagg instance;
 	public static Integer maxDistance;
@@ -46,6 +51,10 @@ public class ClearLagg extends JavaPlugin {
 	public static boolean useChunkClean = true;
 	public static List<String> blockWeight = new ArrayList<>();
 	public static ConcurrentHashMap<String,Double> mapWeight = new ConcurrentHashMap<>();
+	public static String paramHouse = null;
+	public static Double paramFirst = 0.0;
+	public static Double paramSecond = 0.0;
+	public static Double paramLast = 0.0;
 	@Override
 	public void onEnable() {
 		instance = this;
@@ -72,6 +81,10 @@ public class ClearLagg extends JavaPlugin {
 		maxEntityDistance = config.getInt("settings.EntityCleanDistance");
 		cleanChunkMsg = config.getString("message.ChunkCleanMsg", "&7[&a区块清理&7] &e{chunk} &b个区块已经被我们清理辣~");
 		afterClean = config.getInt("settings.ChunkCleanAfterEntity", 30);
+		paramHouse = config.getString("HouseWeight", "0.84-0.851-1");
+		paramFirst = Double.valueOf(paramHouse.split("-")[0]);
+		paramSecond = Double.valueOf(paramHouse.split("-")[1]);
+		paramLast = Double.valueOf(paramHouse.split("-")[2]);
 		useChunkClean = afterClean < period;
 		new BukkitRunnable() {
 			@Override
@@ -90,7 +103,6 @@ public class ClearLagg extends JavaPlugin {
 			}
 		}.runTaskTimerAsynchronously(this, 0L, 20);
 		Bukkit.getPluginCommand("lagger").setExecutor(new PluginCmdBase());
-		NeuralNetwork.init();
 		blockWeight = getConfig().getStringList("NeuralNetwork.BlockWeight");
 		for (String line : blockWeight) {
 			int materialID = Integer.valueOf(line.split("-")[0]);
@@ -99,6 +111,9 @@ public class ClearLagg extends JavaPlugin {
 			mapWeight.put(materialName, weight);
 		}
 		getLogger().info("Loaded "+mapWeight.size()+" model.");
+		getLogger().info("开始机器学习..这可能需要一段时间..");
+		NeuralNetwork.init();
+		getLogger().info("加载完成.");
 	}
 
 	@Override
@@ -154,5 +169,11 @@ public class ClearLagg extends JavaPlugin {
 
 	public static synchronized void broadCastMsg(String msg) {
 		Bukkit.broadcastMessage(msg);
+	}
+
+	@Override
+	public void handleLearningEvent(LearningEvent learningEvent) {
+		MomentumBackpropagation object = (MomentumBackpropagation) learningEvent.getSource();
+		System.out.print(object.getCurrentIteration()+". Total network error : "+object.getTotalNetworkError());
 	}
 }

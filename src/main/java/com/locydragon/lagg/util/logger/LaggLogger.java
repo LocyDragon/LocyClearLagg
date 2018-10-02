@@ -6,14 +6,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class LaggLogger {
 	public static final String path = ".//plugins//LocyClearLagg//Logs//log.txt";
 	public static File ioFile;
-	public static List<String> logs = new ArrayList<>();
+	public static ConcurrentLinkedQueue<String> logs = new ConcurrentLinkedQueue<>();
 	public static FileWriter writer;
 	public static final Object object = new Object();
 	static {

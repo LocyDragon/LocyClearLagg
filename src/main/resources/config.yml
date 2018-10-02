@@ -11,6 +11,7 @@ message:
   BeforeClean: "&7[&a垃圾清理&7] &e还有 &b{time} &e秒后我们就来清理垃圾辣~"
   ChunkCleanMsg: "&7[&a区块清理&7] &e{chunk} &b个区块已经被我们清理辣~"
 NeuralNetwork:
+  HouseWeight: 0.84-0.851-1
   BlockWeight:
     - 5-1
     - 6-1.8

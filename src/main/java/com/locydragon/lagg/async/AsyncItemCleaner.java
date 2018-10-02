@@ -1,6 +1,8 @@
 package com.locydragon.lagg.async;
 
 import com.locydragon.lagg.ClearLagg;
+import com.locydragon.lagg.async.sync.FutureEntityGet;
+import com.locydragon.lagg.listeners.EntitySpawnListener;
 import com.locydragon.lagg.listeners.ache.Ache;
 import com.locydragon.lagg.neural.AutoHouseCheck;
 import com.locydragon.lagg.util.ItemContainer;
@@ -10,10 +12,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-
 import java.util.Random;
 import java.util.concurrent.locks.LockSupport;
-
 
 public class AsyncItemCleaner extends Thread {
 	public World target;
@@ -25,7 +25,7 @@ public class AsyncItemCleaner extends Thread {
 	@Override
 	public void run() {
 		for (Chunk chunk : Ache.loadChunks.get(target)) {
-			if (AutoHouseCheck.isHouse(chunk) && new Random().nextBoolean()) {
+			if (AutoHouseCheck.isHouse(chunk)) {
 				Ache.houseCount.incrementAndGet();
 				continue;
 			}
