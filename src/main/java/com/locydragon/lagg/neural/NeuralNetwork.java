@@ -4,6 +4,7 @@ import com.locydragon.lagg.ClearLagg;
 import com.locydragon.lagg.listeners.ache.Ache;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.nnet.MultiLayerPerceptron;
+import org.neuroph.nnet.learning.LMS;
 import org.neuroph.util.TransferFunctionType;
 
 import java.io.File;
@@ -32,12 +33,12 @@ public class NeuralNetwork{
 			//TODO learn normal learning value for actor
 			actor = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, 2, 10, 1);
 			{
+				dataTraining.addRow(new double[]{3710, 0}, new double[]{0.64});
 				dataTraining.addRow(new double[]{3586, 218.780}, new double[]{1});
-				dataTraining.addRow(new double[]{4000, 0}, new double[]{0.65});
+				dataTraining.addRow(new double[]{0, 3800}, new double[]{0.64});
 				dataTraining.addRow(new double[]{3587, 208.780}, new double[]{1});
-				dataTraining.addRow(new double[]{3770, 30}, new double[]{0.7});
+				dataTraining.addRow(new double[]{4170, 0}, new double[]{0.64});
 				dataTraining.addRow(new double[]{3400, 331.780}, new double[]{1});
-				dataTraining.addRow(new double[]{3970, 0}, new double[]{0.65});
 				//dataTraining.addRow(new double[]{3803, 6.6}, new double[]{0});
 				//dataTraining.addRow(new double[]{3839, 2.0}, new double[]{0});
 			}

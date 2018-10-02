@@ -2,9 +2,9 @@ settings:
   period: 60
   noticeBeforeTime: 15
   ItemDropDelay: 20
-  ItemCleanDistance: 20
+  ItemCleanDistance: 3
   EntitySpawnDelay: 20
-  EntityCleanDistance: 20
+  EntityCleanDistance: 3
   ChunkCleanAfterEntity: 30
 message:
   CleanMsg: "&7[&a垃圾清理&7] &e{item} &b个垃圾 和 &e{monster} &b个怪物已经被我清理辣~"

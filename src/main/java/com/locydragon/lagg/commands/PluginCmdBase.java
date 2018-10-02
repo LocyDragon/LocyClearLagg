@@ -111,8 +111,14 @@ public class PluginCmdBase implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED+"使用/lagger input [<value1>] [<value2>]");
 			}
 		} else if (args[0].equalsIgnoreCase("chunk")) {
-			sender.sendMessage(AutoHouseCheck.forString(((Player)sender).getLocation().getChunk()));
-			sender.sendMessage(AutoHouseCheck.houseWeight(((Player)sender).getLocation().getChunk())+"");
+			Thread async = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					sender.sendMessage(AutoHouseCheck.forString(((Player) sender).getLocation().getChunk()));
+					sender.sendMessage(AutoHouseCheck.houseWeight(((Player)sender).getLocation().getChunk())+"");
+				}
+			});
+			async.start();
 		}
 		return false;
 	}
