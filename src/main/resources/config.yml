@@ -8,9 +8,9 @@ settings:
   ChunkCleanAfterEntity: 30
   debug: false
 message:
-  CleanMsg: "&7[&aåƒåœ¾æ¸…ç†&7] &e{item} &bä¸ªåƒåœ¾ å’Œ &e{monster} &bä¸ªæ€ªç‰©å·²ç»è¢«æˆ‘æ¸…ç†è¾£~"
-  BeforeClean: "&7[&aåƒåœ¾æ¸…ç†&7] &eè¿˜æœ‰ &b{time} &eç§’åæˆ‘ä»¬å°±æ¥æ¸…ç†åƒåœ¾è¾£~"
-  ChunkCleanMsg: "&7[&aåŒºå—æ¸…ç†&7] &e{chunk} &bä¸ªåŒºå—å·²ç»è¢«æˆ‘ä»¬æ¸…ç†è¾£~"
+  CleanMsg: "&7[&aÀ¬»øÇåÀí&7] &e{item} &b¸öÀ¬»ø ºÍ &e{monster} &b¸ö¹ÖÎïÒÑ¾­±»ÎÒÇåÀíÀ±~"
+  BeforeClean: "&7[&aÀ¬»øÇåÀí&7] &e»¹ÓĞ &b{time} &eÃëºóÎÒÃÇ¾ÍÀ´ÇåÀíÀ¬»øÀ±~"
+  ChunkCleanMsg: "&7[&aÇø¿éÇåÀí&7] &e{chunk} &b¸öÇø¿éÒÑ¾­±»ÎÒÃÇÇåÀíÀ±~"
 NeuralNetwork:
   HouseWeight: 0.84-0.851-1
   BlockWeight:
