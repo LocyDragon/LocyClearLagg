@@ -16,7 +16,7 @@ public class Ache {
 	public static ConcurrentHashMap<World, Chunk[]> loadChunks = new ConcurrentHashMap<>();
 	public static ConcurrentLinkedQueue<Entity> needClean = new ConcurrentLinkedQueue<>();
 	public static ConcurrentLinkedQueue<Location> playerLocation = new ConcurrentLinkedQueue<>();
-	public static SyncInteger itemCount = new SyncInteger(); // i am afraid of ABA problem!So i created a class to do the thread safe.
+	public static SyncInteger itemCount = new SyncInteger(); 
 	public static SyncInteger houseCount = new SyncInteger();
 	public static SyncInteger entityCount = new SyncInteger();
 	public static final ConcurrentLinkedQueue<Thread> cleanItemThread = new ConcurrentLinkedQueue<>();
