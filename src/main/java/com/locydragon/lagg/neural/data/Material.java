@@ -510,7 +510,6 @@ public enum Material
   RECORD_12(2267, 1);
 
   private final int id;
-  private final Constructor<? extends MaterialData> ctor;
   private static Material[] byId;
   private static final Map<String, Material> BY_NAME;
   private final int maxStack;
@@ -555,14 +554,6 @@ public enum Material
     this.id = id;
     this.durability = ((short)durability);
     this.maxStack = stack;
-    try
-    {
-      this.ctor = data.getConstructor(new Class[] { Integer.TYPE, Byte.TYPE });
-    } catch (NoSuchMethodException ex) {
-      throw new AssertionError(ex);
-    } catch (SecurityException ex) {
-      throw new AssertionError(ex);
-    }
   }
 
   @Deprecated
@@ -581,29 +572,10 @@ public enum Material
     return this.durability;
   }
 
-  public Class<? extends MaterialData> getData()
-  {
-    return this.ctor.getDeclaringClass();
-  }
-
   @Deprecated
   public MaterialData getNewData(byte raw)
   {
-    try
-    {
-      return (MaterialData)this.ctor.newInstance(new Object[] { Integer.valueOf(this.id), Byte.valueOf(raw) });
-    } catch (InstantiationException ex) {
-      Throwable t = ex.getCause();
-      if ((t instanceof RuntimeException)) {
-        throw ((RuntimeException)t);
-      }
-      if ((t instanceof Error)) {
-        throw ((Error)t);
-      }
-      throw new AssertionError(t);
-    } catch (Throwable t) {
-      throw new AssertionError(t);
-    }
+    return null;
   }
 
   public boolean isBlock()

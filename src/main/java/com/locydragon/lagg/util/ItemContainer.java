@@ -1,6 +1,7 @@
 package com.locydragon.lagg.util;
 
 import com.locydragon.lagg.listeners.ache.Ache;
+import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,6 +13,7 @@ public class ItemContainer {
 	private static Integer nowId = Integer.MIN_VALUE;
 	public static ConcurrentHashMap<UUID,ItemContainer> containerMap = new ConcurrentHashMap<>();
 	public Item target;
+	public int type;
 	public Integer id = -1;
 
 	public ItemContainer(Item itemStack) {
@@ -19,6 +21,7 @@ public class ItemContainer {
 		this.id = nowId;
 		nowId++;
 		containerMap.put(itemStack.getUniqueId(), this);
+		type = target.getItemStack().getTypeId();
 		Ache.containerVector.add(this);
 	}
 

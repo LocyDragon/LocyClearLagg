@@ -119,6 +119,8 @@ public class PluginCmdBase implements CommandExecutor {
 				}
 			});
 			async.start();
+		} else if (args[0].equalsIgnoreCase("here")) {
+			Location where = ((Player)sender).getLocation();
 		}
 		return false;
 	}

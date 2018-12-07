@@ -23,5 +23,6 @@ public class Ache {
 	public static final ConcurrentLinkedQueue<Entity> craftEntityVector = new ConcurrentLinkedQueue<>();
 	public static final ConcurrentLinkedQueue<Thread> cleanEntityThread = new ConcurrentLinkedQueue<>();
 	public static final ConcurrentLinkedQueue<Entity> unlessEntity = new ConcurrentLinkedQueue<>();
+	public static final ConcurrentLinkedQueue<Entity> needSaveItem = new ConcurrentLinkedQueue<>();
 	public static SyncInteger threadCountExtra = new SyncInteger();
 }
